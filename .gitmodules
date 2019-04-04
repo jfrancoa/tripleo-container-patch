@@ -1,0 +1,3 @@
+[submodule "ansible-jsonpatch"]
+	path = ansible-jsonpatch
+	url = https://github.com/ParticleDecay/ansible-jsonpatch.git
