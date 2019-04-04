@@ -1,0 +1,7 @@
+---
+paunch_config: "/var/lib/tripleo-config/hashed-docker-container-startup-config-step_4.json"
+container_cli: "podman"
+host_dir: ""
+container_dir: ""
+containers: []
+patch: ""
