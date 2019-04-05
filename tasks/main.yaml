@@ -8,7 +8,7 @@
   command: "sudo cp {{ paunch_config }} {{ paunch_config }}-{{ ansible_date_time.iso8601_basic_short }}"
 
 - include_tasks: apply_patch.yaml
-  with_items: patches
+  with_items: "{{ patches }}"
 
 - name: Map directory including the patch into the container.
   become: True

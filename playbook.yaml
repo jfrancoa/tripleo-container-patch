@@ -1,9 +1,8 @@
 ---
 - hosts: localhost
-  vars:
-    host_dir: "/usr/lib/python3.6/site-packages/neutron"
-    container_dir: "/usr/lib/python3.6/site-packages/neutron"
-    containers: ["neutron_l3_agent"]
-    patches: ["648522"] 
   roles:
-    - tripleo-container-patch
+    - role: tripleo-container-patch
+      host_dir: "/usr/lib/python3.6/site-packages/neutron"
+      container_dir: "/usr/lib/python3.6/site-packages/neutron"
+      containers: ["neutron_l3_agent"]
+      patches: ["648522"]
