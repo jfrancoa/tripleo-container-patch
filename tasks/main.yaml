@@ -3,6 +3,9 @@
   stat:
     path: "{{ container_cli }}"
 
+- include_tasks: apply_patch.yaml
+  with_items: patches
+
 - name: Map directory including the patch into the container.
   become: True
   json_patch:

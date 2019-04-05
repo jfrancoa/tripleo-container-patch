@@ -1,0 +1,12 @@
+---
+- name: Download gerrit patch
+  uri:
+    url: 'https://review.openstack.org/changes/{{ item }}/revisions/current/patch?download'
+    return_content: yes
+  register: gerrit_patch
+
+- name: Install patch
+  patch:
+    src: "{{ gerrit_patch|base64decode }}"
+    dest: "{{ host_dir }}"
+    strip: 1
