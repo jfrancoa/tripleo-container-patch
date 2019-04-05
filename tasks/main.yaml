@@ -1,7 +1,13 @@
 ---
 - name: "Check {{ paunch_config }} exists"
   stat:
-    path: "{{ container_cli }}"
+    path: "{{ paunch_config }}"
+
+- name: "Create a backup of the paunch configuration file"
+  become: True
+  copy:
+    src: "{{ paunch_config }}"
+    dest: "{{ paunch_config }}-{{ ansible_date_time.iso8601_basic_short }}"
 
 - include_tasks: apply_patch.yaml
   with_items: patches
