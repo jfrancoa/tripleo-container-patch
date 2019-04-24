@@ -1,12 +1,26 @@
 ---
-- name: Download gerrit patch
-  uri:
-    url: 'https://review.openstack.org/changes/{{ item }}/revisions/current/patch?download'
-    return_content: yes
-  register: gerrit_patch
+- name: Check if patch  file was already downloaded
+  stat:
+    path: "~/{{ item }}.patch"
+  register: patch_file
+
+- block:
+  - name: Download gerrit patch
+    get_url:
+      url: 'https://review.openstack.org/changes/{{ item }}/revisions/current/patch?download'
+      dest: "~/{{ item }}.patch"
+
+  - name: Copy patch content decoded into the same file
+    copy:
+      content: "{{ lookup('file', '~/{{ item }}.patch')| b64decode }}"
+      dest: "~/{{ item }}.patch"
+
+  when: patch_file.stat.exists == False
 
 - name: Install patch
+  become: True
   patch:
-    src: "{{ gerrit_patch|base64decode }}"
-    dest: "{{ host_dir }}"
+    src: "~/{{ item }}.patch"
+    basedir: "{{ '/'.join(host_dir.split('/')[:-1]) }}"
     strip: 1
+
